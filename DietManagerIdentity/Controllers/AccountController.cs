@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -166,10 +169,50 @@ namespace DietManagerIdentity.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
             return View();
+        }
+
+        private void UserRegistrationMail(string pass, string login, string mail)
+        {
+            using (SmtpClient client = new SmtpClient())
+            {
+                var credential = new NetworkCredential
+                {
+                    UserName = "testowyt666@gmail.com",
+                    Password = "testowypass"
+                };
+                client.Credentials = credential;
+                
+                client.Host = "smtp.gmail.com";
+                client.Port = 587;
+                client.EnableSsl = true;
+
+                var message = new MailMessage();
+
+                message.To.Add(new MailAddress(mail));
+                message.From = new MailAddress("testowyt666@gmail.com");
+                message.Subject = "Account created successfully!";
+                message.Body = $"A new account has been created for DietManager application\r\nEmail: {mail}\r\nLogin: {login}\r\n Password: {pass}";
+                message.IsBodyHtml = true;
+
+                client.Send(message);
+            }
+        }
+
+        private string GeneratePassword()
+        {
+            string password = Membership.GeneratePassword(16, 2);
+            while (!password.Any(c => char.IsDigit(c))
+                   && (!password.Contains("0") || !password.Contains("o") ||
+                       !password.Contains("l") || !password.Contains("I")))
+            {
+                password = Membership.GeneratePassword(16, 2);
+            }
+
+            return password;
         }
 
         //
@@ -181,19 +224,38 @@ namespace DietManagerIdentity.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
+
+                var pass = GeneratePassword();
+
+                var result = await UserManager.CreateAsync(user, pass);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    UserManager.AddToRole(user.Id, "Dietician");
+                    using (var ctx = new ApplicationDbContext())
+                    {
+                        var createdUser = ctx.Users.ToList().First(u => u.UserName == model.Username);
+
+                        ctx.Dieticians.Add(new Dietician
+                        {
+                            FullName = model.Fullname,
+                            ApplicationUser = createdUser
+                        });
+
+                        ctx.SaveChanges();
+                    }
+
+                    UserRegistrationMail(pass, model.Username, model.Email);
+
+                    return RedirectToAction("Dieticians", "Dietician");
                 }
                 AddErrors(result);
             }

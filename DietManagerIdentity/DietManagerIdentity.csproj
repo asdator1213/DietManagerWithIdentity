@@ -2823,6 +2823,7 @@
     <Content Include="Views\Diet\Add.cshtml" />
     <Content Include="Views\Diet\AddMeal.cshtml" />
     <Content Include="Views\Diet\ManageDiet.cshtml" />
+    <Content Include="Views\Dietician\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

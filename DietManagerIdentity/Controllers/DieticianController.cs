@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using DietManagerIdentity.Models;
 using DietManagerIdentity.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -25,7 +28,7 @@ namespace DietManagerIdentity.Controllers
             return View(dieticians);
         }
 
-        [Authorize(Roles = "Dietician")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Remove(int? id)
         {
             if (id == null)
@@ -58,7 +61,7 @@ namespace DietManagerIdentity.Controllers
             _db.Dieticians.Remove(dietician);
             _db.Users.Remove(user);
 
-            //_db.SaveChanges();
+            _db.SaveChanges();
             return RedirectToAction("Dieticians");
         }
 
@@ -83,6 +86,14 @@ namespace DietManagerIdentity.Controllers
             return View(patients);
         }
 
+        
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Add()
+        {
+            //UserRegistrationMail();
+            return RedirectToAction("Register", "Account");
+        }
 
     }
 }
