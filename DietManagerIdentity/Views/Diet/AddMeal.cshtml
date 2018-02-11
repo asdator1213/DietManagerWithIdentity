@@ -1,0 +1,27 @@
+﻿@model DietManagerIdentity.Models.Diet
+@{
+
+    ViewBag.Title = "AddMeals";
+}
+
+<h2>@ViewData["SuccessMessage"]</h2>
+<h2>@ViewBag.FailMessage</h2>
+
+<h2>Add some meals to @Model.Name</h2>
+
+<div class="k-content">
+    @using (Html.BeginForm())
+    {
+        @Html.DropDownList("mealID", (IEnumerable
+            <SelectListItem>)ViewBag.MealsList, new { @class = "btn btn-primary" })
+
+        @Html.HiddenFor(model => model.DateOfAddition)
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Meals)
+        @Html.HiddenFor(model => model.Patients)
+        @Html.HiddenFor(model => model.Name)
+
+
+        <input type="submit" class="k-button" value="Add a meal to diet" />
+    }
+</div>

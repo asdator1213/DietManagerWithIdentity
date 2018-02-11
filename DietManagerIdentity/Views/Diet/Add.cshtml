@@ -1,0 +1,20 @@
+﻿@using Kendo.Mvc.UI;
+@model DietManagerIdentity.Models.Diet
+
+@{
+    ViewBag.Title = "Add";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+
+    @Html.Kendo().TextBoxFor(model => model.Name).HtmlAttributes(new { placeholder = "Put a name here" })
+
+
+    <input type="submit" class="k-button" value="Add a diet" />
+
+}

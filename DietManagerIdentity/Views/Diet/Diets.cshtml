@@ -1,0 +1,66 @@
+﻿@using Kendo.Mvc.UI
+
+@model List<DietManagerIdentity.Models.Diet>
+
+
+@{
+    ViewBag.Title = "Diets";
+}
+<div class="col-md-12 all-diets-bar">
+    <div>
+        <h2>All defined diets</h2>
+    </div>
+    <div>
+        @Html.ActionLink("Add a new diet", "Add", "Diet", null, new { @class = "k-button" })
+    </div>
+
+</div>
+
+<div class="col-md-12 all-diets-grid">
+    @(Html.Kendo().Grid(Model)
+                              .Name("Grid")
+                              .ToolBar(toolbar =>
+                              {
+                                  toolbar.Template(
+                                        @<text>
+                                            <input type="search" id="searchbox" class="k-textbox" placeholder="Find a diet" />
+                                            <b>To see a result, press ENTER</b>
+                                        </text>
+                                                                              );
+                                      })
+                                      .Columns(c =>
+                                      {
+                                          c.Bound(o => o.Name).HtmlAttributes(new { style = "text-align: center;" });
+                                          c.Bound(o => o.DateOfAddition).HtmlAttributes(new { style = "text-align: center;" });
+                                          c.Bound(o => o.Patients.Count).Title("Count of patients").HtmlAttributes(new { style = "text-align: center;" });
+                                          c.Bound(o => o.Meals.Count).Title("Count of meals").HtmlAttributes(new { style = "text-align: center;" });
+                              // ilość posiłków w danej diecie
+                              c.Bound(null).Template(@<text>@Html.ActionLink("Manage diet", "ManageDiet", new { dietID = item.Id},
+                     new { @class = "btn btn-info" })</text>).HtmlAttributes(new { style = "text-align: center;" });
+                                })
+                                .Sortable()
+    )
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //change event
+        $("#searchbox").on('keyup', (function (e) {
+
+            if (e.keyCode === 13) {
+                var val = $('#searchbox').val();
+                $("#Grid").data("kendoGrid").dataSource.filter({
+                    logic: "or",
+                    filters: [
+                        {
+                            field: "Name",
+                            operator: "contains",
+                            value: val
+                        }
+                    ]
+                });
+            }
+        }));
+    })
+
+</script>

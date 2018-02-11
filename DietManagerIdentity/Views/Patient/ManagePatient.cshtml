@@ -1,0 +1,202 @@
+﻿@model DietManagerIdentity.ViewModels.PatientVm
+
+@{
+    ViewBag.Title = "ManagePatient";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-12 manage-patient-diet-bar">
+            <div class="col-md-6">
+                <h3>Patient's card: @Model.FullName</h3>
+                <p>
+                    Actual diet:
+                    @{
+                        if (@Model.Diet != null)
+                        {
+                            @Model.Diet.Name
+                        }
+                    }
+                </p>
+                <p>Age: @Model.PatientAge</p>
+            </div>
+            <div class="col-md-6">
+                <h3>Set a diet for patient</h3>
+                @Html.DropDownListFor(model => model.DietID, (IEnumerable
+                    <SelectListItem>) ViewBag.DietList, new {@class = "btn btn-primary"})
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 manage-patient-diet-bar manage-patient-weight-info-cell manage-patient-left-cell">
+            @(Html.Kendo().Chart()
+                  .Name("chart")
+                  .Title("Weight chart")
+                  .Legend(legend => legend
+                      .Position(ChartLegendPosition.Bottom)
+                  )
+                  .ChartArea(chartArea => chartArea
+                      .Background("transparent")
+                  )
+                  .SeriesDefaults(seriesDefaults =>
+                      seriesDefaults.Line().Style(ChartLineStyle.Smooth)
+                  )
+                  .Series(series =>
+                  {
+                      series.Line(@Model.WagesList).Name(@Model.FullName);
+                  })
+                  .CategoryAxis(axis => axis
+                      .Categories(@Model.WagesDates)
+                      .MajorGridLines(lines => lines.Visible(false))
+                  )
+                  .ValueAxis(axis => axis
+                      .Numeric()
+                      .AxisCrossingValue(-10)
+                  )
+                  .Tooltip(tooltip => tooltip
+                      .Visible(true)
+                  )
+                  )
+        </div>
+        <div class="col-md-6 manage-patient-diet-bar manage-patient-weight-info-cell manage-patient-right-cell">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Length of the selected diet</h4>
+                    @Html.TextBoxFor(model => model.DietLength, new
+                    {
+                        id = "inputPassword",
+                        @class = "form-control",
+                        placeholder = "Diet length",
+                        required = "required",
+                        type = "number",
+                        min = "1",
+                        max = "150",
+                        Value = Model.DietLength
+                    })
+                </div>
+                <div class="col-md-6">
+                    <h4>Number of consultations</h4>
+                    @Html.TextBoxFor(model => model.NumberOfConsultation, new
+                    {
+                        id = "inputPassword",
+                        @class = "form-control",
+                        placeholder = "Number of consultations",
+                        required = "required",
+                        type = "number",
+                        min = "0",
+                        max = "150",
+                        Value = Model.NumberOfConsultation
+                    })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Planned weight</h4>
+                    @Html.TextBoxFor(model => model.PlannedWeight, new
+                    {
+                        id = "inputPassword",
+                        @class = "form-control",
+                        placeholder = "Planned weight",
+                        required = "required",
+                        type = "number",
+                        min = "1",
+                        max = "300",
+                        Value = Model.PlannedWeight
+                    })
+                </div>
+                <div class="col-md-6">
+                    <h4>Actual weigth</h4>
+                    @Html.TextBoxFor(model => model.Weight, new
+                    {
+                        id = "inputPassword",
+                        @class = "form-control",
+                        placeholder = "Actual weight",
+                        required = "required",
+                        type = "number",
+                        min = "1",
+                        max = "250",
+                        Value = Model.Weight
+                    })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Height</h4>
+                    @Html.TextBoxFor(model => model.Height, new
+                    {
+                        id = "inputPassword",
+                        @class = "form-control",
+                        placeholder = "Height",
+                        required = "required",
+                        type = "number",
+                        min = "1",
+                        max = "250",
+                        Value = Model.Height
+                    })
+                </div>
+                <div class="col-md-6">
+                    <h4>Allergy</h4>
+                    <h4>
+                        @Html.TextAreaFor(model => model.Allergy, 4, 50, new
+                        {
+                            id = "custom-input",
+                            @class = "form-control",
+                            placeholder = "Allergy",
+                            required = "required",
+                            type = "text",
+                            Value = ""
+                        })
+                        @Html.ValidationMessageFor(x => x.Allergy, "", new {@class = "field-validation-error"})
+                    </h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Dislikes</h4>
+                    <h4>
+                        @Html.TextAreaFor(model => model.Dislikes, 4, 50, new
+                        {
+                            id = "custom-input",
+                            @class = "form-control",
+                            placeholder = "Dislikes",
+                            required = "required",
+                            type = "text",
+                            Value = ""
+                        })
+                        @Html.ValidationMessageFor(x => x.Dislikes, "", new {@class = "field-validation-error"})
+                    </h4>
+                </div>
+                <div class="col-md-6">
+                    <h4>Contraindications</h4>
+                    <h4>
+                        @Html.TextAreaFor(model => model.Contraindications, 4, 50, new
+                        {
+                            id = "custom-input",
+                            @class = "form-control",
+                            placeholder = "Contraindications",
+                            required = "required",
+                            type = "text",
+                            Value = ""
+                        })
+                        @Html.ValidationMessageFor(x => x.Contraindications, "", new {@class = "field-validation-error"})
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 manage-patient-diet-bar manage-patient-bottom-cell">
+            @Html.ActionLink("Back", null, null, null, new {href = Request.UrlReferrer, @class = "btn btn-info btn-back manage-patient-back"})
+            <button class="btn btn-info btn-signin manage-patient-submit" type="submit">Save</button>
+        </div>
+    </div>
+
+    @Html.HiddenFor(model => model.FullName)
+    @Html.HiddenFor(model => model.PatientAge)
+    @Html.HiddenFor(model => model.PatientID)
+    @Html.HiddenFor(model => model.DateOfAddition)
+    @Html.HiddenFor(model => model.DietID)
+    @Html.HiddenFor(model => model.DieticianID)
+}

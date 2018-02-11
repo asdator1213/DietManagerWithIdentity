@@ -1,0 +1,35 @@
+﻿@model DietManagerIdentity.ViewModels.AccountDieticianVM
+
+@{
+    ViewBag.Title = "Remove";
+}
+
+<h2>Remove an account</h2>
+
+<h3>Are you sure you want to remove this account?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color">
+            <input type="submit" value="Remove" class="btn btn-default" />
+            @Html.ActionLink("Back to List", "Dieticians", null, new { @class="btn btn-info"})
+        </div>
+    }
+</div>

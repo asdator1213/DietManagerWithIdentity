@@ -1,0 +1,49 @@
+﻿@using DietManagerIdentity.Models
+@using Kendo.Mvc.UI
+
+@model LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+    <div class="card card-container">
+        <img id="profile-img" alt="Login to your account" class="profile-img-card" src="~/Content/img/avatar_2x.png" />
+        <p id="profile-name" class="profile-name-card"></p>
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-signin"}))
+        {
+            @Html.AntiForgeryToken()
+            <span id="reauth-email" class="reauth-email"></span>
+            @Html.TextBoxFor(model => model.Username, new
+            {
+                id = "inputLogin",
+                @class = "form-control",
+                placeholder = "Username",
+                required = "required",
+                autofocus = "autofocus"
+            })
+            @Html.ValidationMessageFor(x => x.Username, "", new { @class = "field-validation-error" })
+            @Html.TextBoxFor(model => model.Password, new
+            {
+                id = "inputPassword",
+                @class = "form-control",
+                placeholder = "Password",
+                required = "required",
+                type = "password"
+            })
+            @Html.ValidationMessageFor(x => x.Password, "", new { @class = "field-validation-error" })
+            <button class="btn btn-lg btn-info btn-block btn-signin" type="submit">Log in</button>
+
+        }
+
+    </div><!-- /card-container -->
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}
