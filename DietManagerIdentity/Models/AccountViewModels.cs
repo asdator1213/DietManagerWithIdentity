@@ -64,12 +64,10 @@ namespace DietManagerIdentity.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "Full name")]
         public string Fullname { get; set; }
 
 
         [Required]
-        [Display(Name="User name")]
         public string Username { get; set; }
 
         [Required]

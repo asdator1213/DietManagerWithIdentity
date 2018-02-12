@@ -3,50 +3,80 @@
     ViewBag.Title = "Register";
 }
 
-<h2>@ViewBag.Title.</h2>
+<div class="container">
+    <div class="add-patient-card card-container">
+        <p id="profile-name" class="profile-name-card" style="margin-bottom: 40px; letter-spacing: 2px;">
+            Add a new dietician
+        </p>
+        @using (Html.BeginForm("Add", "Patient", FormMethod.Post, new { @class = "form-signin" }))
+        {
+            @Html.AntiForgeryToken()
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Fullname, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Fullname, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
-    </div>
-    @*<div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>*@
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
-}
+            <div class="row">
+                <div class="col-md-6 add-patient-label-center">
+                    @Html.LabelFor(model => model.Fullname, new { @class = "add-patient-label" })
+                </div>
+                <div class="col-md-6 ">
+                    @Html.TextBoxFor(model => model.Fullname, new
+                    {
+                        id = "inputLogin",
+                        @class = "form-control",
+                        placeholder = "Fullname",
+                        required = "required",
+                        autofocus = "autofocus"
+                    })
+                    @Html.ValidationMessageFor(x => x.Fullname, "", new { @class = "field-validation-error" })
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-6 add-patient-label-center">
+                    @Html.LabelFor(model => model.Username, new { @class = "add-patient-label" })
+                </div>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.Username, new
+                    {
+                        id = "inputPassword",
+                        @class = "form-control",
+                        placeholder = "Username",
+                        required = "required",
+                        type = "text",
+                        Value = ""
+                    })
+                    @Html.ValidationMessageFor(x => x.Username, "", new { @class = "field-validation-error" })
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-6 add-patient-label-center">
+                    @Html.LabelFor(model => model.Email, new { @class = "add-patient-label" })
+                </div>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.Email, new
+                    {
+                        id = "inputPassword",
+                        @class = "form-control",
+                        placeholder = "Email",
+                        required = "required",
+                        type = "text",
+                        Value = ""
+                    })
+                    @Html.ValidationMessageFor(x => x.Email, "", new { @class = "field-validation-error" })
+
+                </div>
+            </div>
+
+            <div class="row btns-nav">
+                <button class="btn btn-lg btn-info btn-block btn-signin" type="submit">Add</button>
+                @Html.ActionLink("Back", "Dieticians", "Dietician", null, new { @class = "btn btn-lg btn-info btn-block btn-back" })
+            </div>
+
+        }
+
+    </div><!-- /card-container -->
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
