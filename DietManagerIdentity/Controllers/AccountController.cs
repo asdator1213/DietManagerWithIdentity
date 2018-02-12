@@ -224,6 +224,17 @@ namespace DietManagerIdentity.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                if (UserManager.FindByEmail(model.Email) != null)
+                {
+                    return RedirectToAction("Register");
+                }
+
+                if (UserManager.FindByName(model.Username) != null)
+                {
+                    return RedirectToAction("Register");
+                }
+
                 var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
 
                 var pass = GeneratePassword();
