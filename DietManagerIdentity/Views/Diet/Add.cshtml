@@ -6,7 +6,7 @@
 }
 
 
-@using (Html.BeginForm())
+@*@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -17,4 +17,43 @@
 
     <input type="submit" class="k-button" value="Add a diet" />
 
-}
+}*@
+
+
+<div class="container">
+    <div class="add-patient-card card-container">
+        <p class="text-success">@ViewBag.StatusMessage</p>
+        <p id="profile-name" class="profile-name-card" style="margin-bottom: 40px; letter-spacing: 2px;">
+            Add a new diet
+        </p>
+
+        @using (Html.BeginForm("Add", "Diet", FormMethod.Post, new { @class = "form-signin", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+                <div class="col-md-6 add-patient-label-center">
+                    @Html.LabelFor(model => model.Name, new { @class = "add-patient-label" })
+                </div>
+                <div class="col-md-6 ">
+                    @Html.TextBoxFor(model => model.Name, new
+                    {
+                        id = "inputLogin",
+                        @class = "form-control",
+                        placeholder = "Name of a diet",
+                        required = "required",
+                        type = "text",
+                        autofocus = "autofocus"
+                    })
+                    @Html.ValidationMessageFor(x => x.Name, "", new { @class = "field-validation-error" })
+                </div>
+            </div>
+            <div class="row btns-nav">
+                <button class="btn btn-lg btn-info btn-block btn-signin" type="submit">Save</button>
+                @Html.ActionLink("Back", "Diets", "Diet", null, new { @class = "btn btn-lg btn-info btn-block btn-back" })
+            </div>
+
+        }
+
+    </div>
+</div>

@@ -4,24 +4,34 @@
     ViewBag.Title = "AddMeals";
 }
 
-<h2>@ViewData["SuccessMessage"]</h2>
-<h2>@ViewBag.FailMessage</h2>
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-12 manage-patient-diet-bar">
+            <div class="col-md-6">
+                <h2>Add a meal to @Model.Name's diet</h2>
+            </div>
+            <div class="col-md-6">
+                @Html.DropDownList("mealID", (IEnumerable
+                    <SelectListItem>) ViewBag.MealsList, new {@class = "btn btn-primary", style = "margin-top:20px;float:right"})
 
-<h2>Add some meals to @Model.Name</h2>
+                @Html.HiddenFor(model => model.DateOfAddition)
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.Meals)
+                @Html.HiddenFor(model => model.Patients)
+                @Html.HiddenFor(model => model.Name)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 manage-patient-diet-bar diet-add-meal-cell">
+        </div>
+    </div>
 
-<div class="k-content">
-    @using (Html.BeginForm())
-    {
-        @Html.DropDownList("mealID", (IEnumerable
-            <SelectListItem>)ViewBag.MealsList, new { @class = "btn btn-primary" })
-
-        @Html.HiddenFor(model => model.DateOfAddition)
-        @Html.HiddenFor(model => model.Id)
-        @Html.HiddenFor(model => model.Meals)
-        @Html.HiddenFor(model => model.Patients)
-        @Html.HiddenFor(model => model.Name)
-
-
-        <input type="submit" class="k-button" value="Add a meal to diet" />
-    }
-</div>
+    <div class="row">
+        <div class="col-md-12 manage-patient-diet-bar manage-patient-bottom-cell">
+            @Html.ActionLink("Back", "ManageDiet", "Diet", new {dietId = Model.Id}, new {@class = "btn btn-info btn-back manage-patient-back"})
+            <button class="btn btn-info btn-signin manage-patient-submit" type="submit">Add</button>
+        </div>
+    </div>
+}
