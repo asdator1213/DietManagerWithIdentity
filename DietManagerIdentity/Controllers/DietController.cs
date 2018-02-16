@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using DietManagerIdentity.Models;
 
 namespace DietManagerIdentity.Controllers
@@ -54,6 +55,16 @@ namespace DietManagerIdentity.Controllers
             PrepareMealList();
 
             return View(diet);
+        }
+
+        public JsonResult Get_Meals()
+        {
+            return Json(_db.Meals.Select(m => new {MealId = m.Id, MealName = m.Name}), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetMealInfo(Meal meal)
+        {
+            return new JsonResult{Data = new{ meal.Name}};
         }
 
         [Authorize(Roles = "Dietician")]

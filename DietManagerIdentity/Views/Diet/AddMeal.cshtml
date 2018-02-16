@@ -1,4 +1,5 @@
-﻿@model DietManagerIdentity.Models.Diet
+﻿@using DietManagerIdentity.Models
+@model DietManagerIdentity.Models.Diet
 @{
 
     ViewBag.Title = "AddMeals";
@@ -12,8 +13,24 @@
                 <h2>Add a meal to @Model.Name's diet</h2>
             </div>
             <div class="col-md-6">
+
+                @*@(Html.Kendo().DropDownList()
+                                                                          .Name("mealID")
+                                                                          .OptionLabel("Select meal ..")
+                                                                          .DataTextField("MealName")
+                                                                          .DataValueField("MealId")
+                                                                          .DataSource(source =>
+                                                                          {
+                                                                              source.Read(read =>
+                                                                              {
+                                                                                  read.Action("Get_Meals", "Diet");
+                                                                              });
+                                                                          })
+                                                                          .HtmlAttributes(new { id = "mealsDropDown", style = "width:100%;margin-top:20px;float:right" })
+                    )*@
+
                 @Html.DropDownList("mealID", (IEnumerable
-                    <SelectListItem>) ViewBag.MealsList, new {@class = "btn btn-primary", style = "margin-top:20px;float:right"})
+                                <SelectListItem>)ViewBag.MealsList, new { @class = "btn btn-primary", style = "margin-top:20px;float:right" })
 
                 @Html.HiddenFor(model => model.DateOfAddition)
                 @Html.HiddenFor(model => model.Id)
@@ -24,14 +41,37 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 manage-patient-diet-bar diet-add-meal-cell">
+        <div class="col-md-12 manage-patient-diet-bar diet-add-meal-cell" id="Meal-details">
+            <div id="partial"></div>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12 manage-patient-diet-bar manage-patient-bottom-cell">
-            @Html.ActionLink("Back", "ManageDiet", "Diet", new {dietId = Model.Id}, new {@class = "btn btn-info btn-back manage-patient-back"})
+            @Html.ActionLink("Back", "ManageDiet", "Diet", new { dietId = Model.Id }, new { @class = "btn btn-info btn-back manage-patient-back" })
             <button class="btn btn-info btn-signin manage-patient-submit" type="submit">Add</button>
         </div>
+        <input type="button" id="btnSend" value="Send" />
     </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#btnSend').click(function () {
+                var meal = { Name: 'WEEEEEEEE' }
+                console.log(meal);
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetMealInfo")',
+                    data: { 'meal': meal },
+                    datatype: 'json',
+                    success: function (data) {
+                        alert("Meal name: " + data.Name);
+                    },
+                    error: function (result) {
+                        alert("Dupa panie " + result);
+                    }
+                });
+            });
+        });
+    </script>
 }

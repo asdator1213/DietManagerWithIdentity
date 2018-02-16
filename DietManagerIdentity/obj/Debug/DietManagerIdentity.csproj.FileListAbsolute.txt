@@ -96,3 +96,5 @@ C:\Users\asdator1213\Documents\Visual Studio 2017\Projects\DietManagerIdentity\D
 C:\Users\asdator1213\Documents\Visual Studio 2017\Projects\DietManagerIdentity\DietManagerIdentity\obj\Debug\DietManagerIdentity.Migrations.DodanieModeliDoApki.resources
 C:\Users\asdator1213\Documents\Visual Studio 2017\Projects\DietManagerIdentity\DietManagerIdentity\obj\Debug\DietManagerIdentity.Migrations.NewMigration.resources
 C:\Users\asdator1213\Documents\Visual Studio 2017\Projects\DietManagerIdentity\DietManagerIdentity\obj\Debug\DietManagerIdentity.Migrations.WywalenieApplicationUserId.resources
+C:\Users\asdator1213\Documents\Visual Studio 2017\Projects\DietManagerIdentity\DietManagerIdentity\obj\Debug\DietManagerIdentity.Migrations.DodanieRequiredDoDietModel.resources
+C:\Users\asdator1213\Documents\Visual Studio 2017\Projects\DietManagerIdentity\DietManagerIdentity\obj\Debug\DietManagerIdentity.Migrations.WywalenieRequiredzPatientModel.resources

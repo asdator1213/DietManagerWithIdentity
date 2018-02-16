@@ -196,6 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\DietController.cs" />
     <Compile Include="Controllers\DieticianController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -218,6 +219,14 @@
     <Compile Include="Migrations\201802100935296_WywalenieApplicationUserId.cs" />
     <Compile Include="Migrations\201802100935296_WywalenieApplicationUserId.Designer.cs">
       <DependentUpon>201802100935296_WywalenieApplicationUserId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802161256119_DodanieRequiredDoDietModel.cs" />
+    <Compile Include="Migrations\201802161256119_DodanieRequiredDoDietModel.Designer.cs">
+      <DependentUpon>201802161256119_DodanieRequiredDoDietModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802161309469_WywalenieRequired z PatientModel.cs" />
+    <Compile Include="Migrations\201802161309469_WywalenieRequired z PatientModel.Designer.cs">
+      <DependentUpon>201802161309469_WywalenieRequired z PatientModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -2824,6 +2833,7 @@
     <Content Include="Views\Diet\AddMeal.cshtml" />
     <Content Include="Views\Diet\ManageDiet.cshtml" />
     <Content Include="Views\Dietician\Add.cshtml" />
+    <Content Include="Views\Default\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2853,6 +2863,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802100935296_WywalenieApplicationUserId.resx">
       <DependentUpon>201802100935296_WywalenieApplicationUserId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802161256119_DodanieRequiredDoDietModel.resx">
+      <DependentUpon>201802161256119_DodanieRequiredDoDietModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802161309469_WywalenieRequired z PatientModel.resx">
+      <DependentUpon>201802161309469_WywalenieRequired z PatientModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

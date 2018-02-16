@@ -48,11 +48,11 @@ namespace DietManagerIdentity.Models
 
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Enter your login.")]
         [Display(Name = "Username")]
         public string Username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Enter your password.")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

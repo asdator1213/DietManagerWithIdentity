@@ -7,6 +7,8 @@ namespace DietManagerIdentity.Models
     public class Diet
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "This field is required.")]
         [Display(Name = "Diet's name")]
         public string Name { get; set; }
         public DateTime DateOfAddition { get; set; }

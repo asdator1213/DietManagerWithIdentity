@@ -38,17 +38,14 @@ namespace DietManagerIdentity.ViewModels
         [Display(Name = "Patient's age")]
         public int PatientAge { get; set; }
 
-        [Required(ErrorMessage = "This field is required.")]
         public string Dislikes { get; set; }
 
-        [Required(ErrorMessage = "This field is required.")]
         public string Allergy { get; set; }
 
         [Required(ErrorMessage = "This field is required.")]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer Number")]
         public int PlannedWeight { get; set; }
 
-        [Required(ErrorMessage = "This field is required.")]
         public string Contraindications { get; set; }
 
         public int[] WagesList { get; set; }
