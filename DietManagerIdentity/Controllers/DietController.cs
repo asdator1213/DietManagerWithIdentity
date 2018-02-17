@@ -30,7 +30,7 @@ namespace DietManagerIdentity.Controllers
         public ActionResult Add(Diet diet)
         {
             if (!ModelState.IsValid)
-                return RedirectToAction("Login", "Account");
+                return View();
             diet.DateOfAddition = DateTime.Now;
             _db.Diets.Add(diet);
             _db.SaveChanges();
