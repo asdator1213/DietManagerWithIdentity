@@ -35,36 +35,18 @@ namespace DietManagerIdentity.Controllers
             _db.Diets.Add(diet);
             _db.SaveChanges();
             return RedirectToAction("Diets");
-
         }
-
-        private void PrepareMealList()
-        {
-            var mealsList = _db.Meals.ToList().Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            });
-            ViewBag.MealsList = mealsList;
-        }
-
+        
         [Authorize(Roles = "Dietician")]
         public ActionResult AddMeal(int? dietId)
         {
             var diet = _db.Diets.Find(dietId);
-            PrepareMealList();
-
             return View(diet);
         }
 
         public JsonResult Get_Meals()
         {
             return Json(_db.Meals.Select(m => new {MealId = m.Id, MealName = m.Name}), JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult GetMealInfo(Meal meal)
-        {
-            return new JsonResult{Data = new{ meal.Name}};
         }
 
         [Authorize(Roles = "Dietician")]

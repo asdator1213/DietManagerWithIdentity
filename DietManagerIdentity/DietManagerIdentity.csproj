@@ -204,6 +204,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DieticianHelper.cs" />
+    <Compile Include="Helpers\PatientHelper.cs" />
+    <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Migrations\201802081644476_Init.cs" />
     <Compile Include="Migrations\201802081644476_Init.Designer.cs">
       <DependentUpon>201802081644476_Init.cs</DependentUpon>

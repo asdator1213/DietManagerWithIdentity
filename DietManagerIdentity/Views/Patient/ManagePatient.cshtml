@@ -23,8 +23,22 @@
             </div>
             <div class="col-md-6">
                 <h3>Set a diet for patient</h3>
-                @Html.DropDownListFor(model => model.DietID, (IEnumerable
-                    <SelectListItem>) ViewBag.DietList, new {@class = "btn btn-primary"})
+                @(Html.Kendo().DropDownList()
+                              .Name("Diets")
+                              .Value(@Model.DietID.ToString())
+                              .DataTextField("DietName")
+                              .DataValueField("DietId")
+                              .DataSource(source =>
+                              {
+                                  source.Read(read =>
+                                  {
+                                      read.Action("Get_Diets", "Patient");
+                                  });
+                              })
+                              .HtmlAttributes(new {style = "width:100%;margin-top:20px;float:right" })
+                )
+                @*@Html.DropDownListFor(model => model.DietID, (IEnumerable
+                    <SelectListItem>) ViewBag.DietList, new {@class = "btn btn-primary"})*@
             </div>
         </div>
     </div>
@@ -32,33 +46,33 @@
     <div class="row">
         <div class="col-md-6 manage-patient-diet-bar manage-patient-weight-info-cell manage-patient-left-cell">
             @(Html.Kendo().Chart()
-                  .Name("chart")
-                  .Title("Weight chart")
-                  .Legend(legend => legend
-                      .Position(ChartLegendPosition.Bottom)
-                  )
-                  .ChartArea(chartArea => chartArea
-                      .Background("transparent")
-                  )
-                  .SeriesDefaults(seriesDefaults =>
-                      seriesDefaults.Line().Style(ChartLineStyle.Smooth)
-                  )
-                  .Series(series =>
-                  {
-                      series.Line(@Model.WagesList).Name(@Model.FullName);
-                  })
-                  .CategoryAxis(axis => axis
-                      .Categories(@Model.WagesDates)
-                      .MajorGridLines(lines => lines.Visible(false))
-                  )
-                  .ValueAxis(axis => axis
-                      .Numeric()
-                      .AxisCrossingValue(-10)
-                  )
-                  .Tooltip(tooltip => tooltip
-                      .Visible(true)
-                  )
-                  )
+                          .Name("chart")
+                          .Title("Weight chart")
+                          .Legend(legend => legend
+                              .Position(ChartLegendPosition.Bottom)
+                          )
+                          .ChartArea(chartArea => chartArea
+                              .Background("transparent")
+                          )
+                          .SeriesDefaults(seriesDefaults =>
+                              seriesDefaults.Line().Style(ChartLineStyle.Smooth)
+                          )
+                          .Series(series =>
+                          {
+                              series.Line(@Model.WagesList).Name(@Model.FullName);
+                          })
+                          .CategoryAxis(axis => axis
+                              .Categories(@Model.WagesDates)
+                              .MajorGridLines(lines => lines.Visible(false))
+                          )
+                          .ValueAxis(axis => axis
+                              .Numeric()
+                              .AxisCrossingValue(-10)
+                          )
+                          .Tooltip(tooltip => tooltip
+                              .Visible(true)
+                          )
+            )
         </div>
         <div class="col-md-6 manage-patient-diet-bar manage-patient-weight-info-cell manage-patient-right-cell">
             <div class="row">
@@ -147,7 +161,7 @@
                             type = "text",
                             Value = ""
                         })
-                        @Html.ValidationMessageFor(x => x.Allergy, "", new {@class = "field-validation-error"})
+                        @Html.ValidationMessageFor(x => x.Allergy, "", new { @class = "field-validation-error" })
                     </h4>
                 </div>
             </div>
@@ -163,7 +177,7 @@
                             type = "text",
                             Value = ""
                         })
-                        @Html.ValidationMessageFor(x => x.Dislikes, "", new {@class = "field-validation-error"})
+                        @Html.ValidationMessageFor(x => x.Dislikes, "", new { @class = "field-validation-error" })
                     </h4>
                 </div>
                 <div class="col-md-6">
@@ -177,7 +191,7 @@
                             type = "text",
                             Value = ""
                         })
-                        @Html.ValidationMessageFor(x => x.Contraindications, "", new {@class = "field-validation-error"})
+                        @Html.ValidationMessageFor(x => x.Contraindications, "", new { @class = "field-validation-error" })
                     </h4>
                 </div>
             </div>
@@ -185,7 +199,7 @@
     </div>
     <div class="row">
         <div class="col-md-12 manage-patient-diet-bar manage-patient-bottom-cell">
-            @Html.ActionLink("Back", null, null, null, new {href = Request.UrlReferrer, @class = "btn btn-info btn-back manage-patient-back"})
+            @Html.ActionLink("Back", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-info btn-back manage-patient-back" })
             <button class="btn btn-info btn-signin manage-patient-submit" type="submit">Save</button>
         </div>
     </div>

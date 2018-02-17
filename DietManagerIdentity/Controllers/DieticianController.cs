@@ -7,6 +7,7 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using DietManagerIdentity.Helpers;
 using DietManagerIdentity.Models;
 using DietManagerIdentity.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -39,7 +40,7 @@ namespace DietManagerIdentity.Controllers
             var dietician = _db.Dieticians.Find(id);
 
             var username = dietician.ApplicationUser.UserName;
-            //var userFullname = _db.Dieticians.Find(clickedUser.Id).FullName;
+
             var user = new AccountDieticianVM
             {
                 Login = username,
@@ -68,9 +69,7 @@ namespace DietManagerIdentity.Controllers
         [Authorize(Roles = "Dietician")]
         public ActionResult Patients()
         {
-            var loggedUser = System.Web.HttpContext.Current.GetOwinContext()
-                .GetUserManager<ApplicationUserManager>()
-                .FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+            var loggedUser = UserHelper.GetLoggedUser();
 
             var dietician = _db.Dieticians
                 .SingleOrDefault(p => p.ApplicationUser.Id == loggedUser.Id);
@@ -86,14 +85,12 @@ namespace DietManagerIdentity.Controllers
             return View(patients);
         }
 
-        
-
         [Authorize(Roles = "Admin")]
         public ActionResult Add()
         {
-            //UserRegistrationMail();
             return RedirectToAction("Register", "Account");
         }
 
+        
     }
 }

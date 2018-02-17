@@ -14,8 +14,8 @@
             </div>
             <div class="col-md-6">
 
-                @*@(Html.Kendo().DropDownList()
-                                                                          .Name("mealID")
+                @(Html.Kendo().DropDownList()
+                                                                          .Name("Meals")
                                                                           .OptionLabel("Select meal ..")
                                                                           .DataTextField("MealName")
                                                                           .DataValueField("MealId")
@@ -27,10 +27,7 @@
                                                                               });
                                                                           })
                                                                           .HtmlAttributes(new { id = "mealsDropDown", style = "width:100%;margin-top:20px;float:right" })
-                    )*@
-
-                @Html.DropDownList("mealID", (IEnumerable
-                                <SelectListItem>)ViewBag.MealsList, new { @class = "btn btn-primary", style = "margin-top:20px;float:right" })
+                    )
 
                 @Html.HiddenFor(model => model.DateOfAddition)
                 @Html.HiddenFor(model => model.Id)
@@ -51,27 +48,5 @@
             @Html.ActionLink("Back", "ManageDiet", "Diet", new { dietId = Model.Id }, new { @class = "btn btn-info btn-back manage-patient-back" })
             <button class="btn btn-info btn-signin manage-patient-submit" type="submit">Add</button>
         </div>
-        <input type="button" id="btnSend" value="Send" />
     </div>
-
-    <script type="text/javascript">
-        $(function () {
-            $('#btnSend').click(function () {
-                var meal = { Name: 'WEEEEEEEE' }
-                console.log(meal);
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("GetMealInfo")',
-                    data: { 'meal': meal },
-                    datatype: 'json',
-                    success: function (data) {
-                        alert("Meal name: " + data.Name);
-                    },
-                    error: function (result) {
-                        alert("Dupa panie " + result);
-                    }
-                });
-            });
-        });
-    </script>
 }
