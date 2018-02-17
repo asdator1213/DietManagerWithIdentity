@@ -284,3 +284,23 @@ body {
 #logoff-btn:hover {
     background-color: #f5f5f5;
 }
+
+.meal-info-partial-message {
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black, 0px 0px 4px black;
+    font-size: 40px;
+    color: white;
+    margin-top: 10px;
+
+}
+
+.meal-info-label {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.meal-info-property-row {
+    margin-bottom: 20px;
+    text-align: center;
+}

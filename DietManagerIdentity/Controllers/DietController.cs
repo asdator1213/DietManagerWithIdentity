@@ -96,5 +96,12 @@ namespace DietManagerIdentity.Controllers
 
             return RedirectToAction("ManageDiet", new { dietId = diet.Id });
         }
+
+        public ActionResult GetMealDetails(int id)
+        {
+            var meal = _db.Meals.Find(id);
+            return View(meal);
+        }
+
     }
 }

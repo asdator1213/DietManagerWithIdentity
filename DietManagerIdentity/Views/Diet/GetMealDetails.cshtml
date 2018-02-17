@@ -1,0 +1,32 @@
+﻿@model DietManagerIdentity.Models.Meal
+
+@{
+    Layout = null;
+}
+<div class="col-md-12 meal-info-partial-message">
+    <span>Information about selected meal: </span>
+</div>
+<div class="row">
+    <div class="col-md-6 meal-info-property-row">
+        <span>
+            <span class="meal-info-label">Name:</span> @Model.Name
+        </span>
+    </div>
+    <div class="col-md-6 meal-info-property-row">
+        <span>
+            <span class="meal-info-label">Date of Addition:</span> @Model.DateOfAddition
+        </span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 meal-info-property-row">
+        <span>
+            <span class="meal-info-label">Type of meal:</span> @Model.MealType
+        </span>
+    </div>
+    <div class="col-md-6 meal-info-property-row">
+        <span>
+            <span class="meal-info-label">Shopping list:</span> @Model.ShoppingList
+        </span>
+    </div>
+</div>

@@ -2837,6 +2837,7 @@
     <Content Include="Views\Diet\ManageDiet.cshtml" />
     <Content Include="Views\Dietician\Add.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
+    <Content Include="Views\Diet\GetMealDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

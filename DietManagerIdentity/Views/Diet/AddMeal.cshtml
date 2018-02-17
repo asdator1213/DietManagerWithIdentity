@@ -1,5 +1,4 @@
-﻿@using DietManagerIdentity.Models
-@model DietManagerIdentity.Models.Diet
+﻿@model DietManagerIdentity.Models.Diet
 @{
 
     ViewBag.Title = "AddMeals";
@@ -15,19 +14,20 @@
             <div class="col-md-6">
 
                 @(Html.Kendo().DropDownList()
-                                                                          .Name("mealId")
-                                                                          .OptionLabel("Select meal ..")
-                                                                          .DataTextField("MealName")
-                                                                          .DataValueField("MealId")
-                                                                          .DataSource(source =>
-                                                                          {
-                                                                              source.Read(read =>
-                                                                              {
-                                                                                  read.Action("Get_Meals", "Diet");
-                                                                              });
-                                                                          })
-                                                                          .HtmlAttributes(new { id = "mealsDropDown", style = "width:100%;margin-top:20px;float:right" })
-                    )
+                                        .Name("mealId")
+                                        
+                                        .DataTextField("MealName")
+                                        .DataValueField("MealId")
+                                        .Events(x => x.Select("onMealSelect"))
+                                        .DataSource(source =>
+                                        {
+                                            source.Read(read =>
+                                            {
+                                                read.Action("Get_Meals", "Diet");
+                                            });
+                                        })
+                                        .HtmlAttributes(new { id = "mealsDropDown", style = "width:100%;margin-top:20px;float:right" })
+                )
 
                 @Html.HiddenFor(model => model.DateOfAddition)
                 @Html.HiddenFor(model => model.Id)
@@ -39,7 +39,9 @@
     </div>
     <div class="row">
         <div class="col-md-12 manage-patient-diet-bar diet-add-meal-cell" id="Meal-details">
-            <div id="partial"></div>
+            <div id="partial">
+
+            </div>
         </div>
     </div>
 
@@ -49,4 +51,15 @@
             <button class="btn btn-info btn-signin manage-patient-submit" type="submit">Add</button>
         </div>
     </div>
+
+    <script>
+        function onMealSelect(e) {
+            var dataItem = this.dataItem(e.item.index());
+            var mealId = dataItem.MealId; // value of the dropdown
+            //var mealName = dataItem.MealName; // text of the dropdown
+            $('#partial').load('@Url.Action("GetMealDetails", "Diet")?id=' + mealId);
+        }
+
+    </script>
 }
+
