@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 using DietManagerIdentity.Models;
 
 namespace DietManagerIdentity.Controllers
@@ -53,7 +50,12 @@ namespace DietManagerIdentity.Controllers
         [HttpPost]
         public ActionResult AddMeal(Diet diet, string mealId)
         {
-            int.TryParse(mealId, out var id);
+            if (!int.TryParse(mealId, out var id))
+            {
+                ViewBag.Error = "Wystąpił błąd.";
+                return RedirectToAction("AddMeal", diet.Id);
+            }
+
 
             var meal = _db.Meals
                 .SingleOrDefault(p => p.Id == id);
@@ -61,15 +63,15 @@ namespace DietManagerIdentity.Controllers
             var dietMeals = _db.Diets
                 .SingleOrDefault(p => p.Id == diet.Id);
 
+
             if (dietMeals == null)
             {
-                int dietId = diet.Id;
-                return RedirectToAction("AddMeal", dietId);
+                return RedirectToAction("AddMeal", diet.Id);
             }
+
             dietMeals.Meals.Add(meal);
 
             _db.SaveChanges();
-
             return RedirectToAction("ManageDiet", new { dietId = diet.Id });
         }
 

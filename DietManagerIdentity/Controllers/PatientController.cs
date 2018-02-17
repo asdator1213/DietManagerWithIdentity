@@ -68,7 +68,12 @@ namespace DietManagerIdentity.Controllers
         [HttpPost]
         public ActionResult ManagePatient(PatientVm patient, string dietId)
         {
-            int.TryParse(dietId, out var id);
+            if (!int.TryParse(dietId, out var id))
+            {
+                ViewBag.Error = "Wystąpił błąd.";
+                return RedirectToAction("Patients", "Dietician");
+            }
+                
             patient.DietID = id;
 
             var patientToSave = PatientHelper.FillPatientFromViewModel(patient);
