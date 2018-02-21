@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using DietManagerIdentity.Helpers;
 using DietManagerIdentity.Models;
 using DietManagerIdentity.ViewModels;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace DietManagerIdentity.Controllers
 {
@@ -19,8 +15,7 @@ namespace DietManagerIdentity.Controllers
         [Authorize(Roles = "Dietician")]
         public ActionResult Add()
         {
-            var patient = new Patient();
-            return View(patient);
+            return View(new Patient());
         }
 
         [Authorize(Roles = "Dietician")]

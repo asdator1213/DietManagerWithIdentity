@@ -196,7 +196,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\DietController.cs" />
     <Compile Include="Controllers\DieticianController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -2836,7 +2835,6 @@
     <Content Include="Views\Diet\AddMeal.cshtml" />
     <Content Include="Views\Diet\ManageDiet.cshtml" />
     <Content Include="Views\Dietician\Add.cshtml" />
-    <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Views\Diet\GetMealDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>

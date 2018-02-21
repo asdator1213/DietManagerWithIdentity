@@ -8,11 +8,11 @@ namespace DietManagerIdentity.Helpers
 {
     public static class DieticianHelper
     {
-        private static ApplicationDbContext _db = new ApplicationDbContext();
+        private static readonly ApplicationDbContext Db = new ApplicationDbContext();
 
         public static int GetLoggedDieticianId(ApplicationUser dietician)
         {
-            return _db.Dieticians
+            return Db.Dieticians
                 .Single(p => p.ApplicationUser.Id == dietician.Id).Id;
         }
     }

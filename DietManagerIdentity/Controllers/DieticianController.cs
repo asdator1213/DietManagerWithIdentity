@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
-using System.Net.Mail;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 using DietManagerIdentity.Helpers;
 using DietManagerIdentity.Models;
 using DietManagerIdentity.ViewModels;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
 
 
 namespace DietManagerIdentity.Controllers
@@ -22,7 +13,6 @@ namespace DietManagerIdentity.Controllers
         private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         [Authorize(Roles = "Admin")]
-        // GET: Dietician
         public ActionResult Dieticians()
         {
             var dieticians = _db.Dieticians.ToList();
@@ -77,10 +67,8 @@ namespace DietManagerIdentity.Controllers
             if (dietician == null)
                 return RedirectToAction("Login", "Account");
 
-            var dieticianId = dietician.Id;
-
             var patients = _db.Patients
-                .Where(p => p.DieticianId == dieticianId).ToList();
+                .Where(p => p.DieticianId == dietician.Id).ToList();
 
             return View(patients);
         }

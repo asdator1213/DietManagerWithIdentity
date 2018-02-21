@@ -28,9 +28,9 @@
                             c.Bound(item => item.FullName).HtmlAttributes(new { style = "text-align: center;" });
                             c.Bound(item => item.Patients.Count).Title("Count of patients").HtmlAttributes(new { style = "text-align: center;" });
                             c.Bound(null).Template(@<text>@Html.ActionLink("Remove", "Remove", new { id = item.Id },
-new { @class = "btn btn-warning" })</text>).HtmlAttributes(new { style = "text-align: center;" });
-                                })
-                                .Sortable()
+                                new { @class = "btn btn-warning" })</text>).HtmlAttributes(new { style = "text-align: center;" });
+                        })
+                        .Sortable()
     )
 </div>
 
