@@ -1,17 +1,13 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Security;
+﻿using DietManagerIdentity.Helpers;
+using DietManagerIdentity.Models;
+using DietManagerIdentity.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using DietManagerIdentity.Models;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace DietManagerIdentity.Controllers
 {
@@ -175,46 +171,6 @@ namespace DietManagerIdentity.Controllers
             return View();
         }
 
-        private void UserRegistrationMail(string pass, string login, string mail)
-        {
-            using (SmtpClient client = new SmtpClient())
-            {
-                var credential = new NetworkCredential
-                {
-                    UserName = "testowyt666@gmail.com",
-                    Password = "testowypass"
-                };
-                client.Credentials = credential;
-                
-                client.Host = "smtp.gmail.com";
-                client.Port = 587;
-                client.EnableSsl = true;
-
-                var message = new MailMessage();
-
-                message.To.Add(new MailAddress(mail));
-                message.From = new MailAddress("testowyt666@gmail.com");
-                message.Subject = "Account created successfully!";
-                message.Body = $"A new account has been created for DietManager application\r\nEmail: {mail}\r\nLogin: {login}\r\n Password: {pass}";
-                message.IsBodyHtml = true;
-
-                client.Send(message);
-            }
-        }
-
-        private string GeneratePassword()
-        {
-            string password = Membership.GeneratePassword(16, 2);
-            while (!password.Any(c => char.IsDigit(c))
-                   && (!password.Contains("0") || !password.Contains("o") ||
-                       !password.Contains("l") || !password.Contains("I")))
-            {
-                password = Membership.GeneratePassword(16, 2);
-            }
-
-            return password;
-        }
-
         //
         // POST: /Account/Register
         [HttpPost]
@@ -237,7 +193,7 @@ namespace DietManagerIdentity.Controllers
 
                 var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
 
-                var pass = GeneratePassword();
+                var pass = PassGenerator.Generate();
 
                 var result = await UserManager.CreateAsync(user, pass);
                 if (result.Succeeded)
@@ -264,7 +220,9 @@ namespace DietManagerIdentity.Controllers
                         ctx.SaveChanges();
                     }
 
-                    UserRegistrationMail(pass, model.Username, model.Email);
+                    Mailing.Send(new AccountCreatedViewModel { To = model.Email, Username = model.Username, Password = pass});
+
+                    //UserRegistrationMail(pass, model.Username, model.Email);
 
                     return RedirectToAction("Dieticians", "Dietician");
                 }

@@ -35,22 +35,6 @@
 </div>
 
 
-
-<script>
-    function addUser() {
-        $.ajax({
-            url: '/Account/Add',
-            data: {},
-            success: function (result) {
-                if (result) {
-                    $('body').html(result);
-                }
-            }
-        });
-    }
-</script>
-
-
 <script type="text/javascript">
     $(document).ready(function () {
         //change event
