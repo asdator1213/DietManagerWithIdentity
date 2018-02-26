@@ -1,10 +1,10 @@
-﻿using System;
+﻿using DietManagerIdentity.Helpers;
+using DietManagerIdentity.Models;
+using DietManagerIdentity.ViewModels;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using DietManagerIdentity.Helpers;
-using DietManagerIdentity.Models;
-using DietManagerIdentity.ViewModels;
 
 namespace DietManagerIdentity.Controllers
 {
@@ -24,9 +24,9 @@ namespace DietManagerIdentity.Controllers
         {
             if (ModelState.IsValid)
             {
-                var loggedDietician = UserHelper.GetLoggedUser();
-                var dieticianId = DieticianHelper.GetLoggedDieticianId(loggedDietician);
-                patient.DieticianId = dieticianId;
+                var loggedDietician    = UserHelper.GetLoggedUser();
+                var dieticianId        = DieticianHelper.GetLoggedDieticianId(loggedDietician);
+                patient.DieticianId    = dieticianId;
                 patient.DateOfAddition = DateTime.Now;
 
                 _db.Patients.Add(patient);
@@ -68,17 +68,15 @@ namespace DietManagerIdentity.Controllers
                 ViewBag.Error = "Wystąpił błąd.";
                 return RedirectToAction("Patients", "Dietician");
             }
-                
-            patient.DietID = id;
-
+            
+            patient.DietID    = id;
             var patientToSave = PatientHelper.FillPatientFromViewModel(patient);
-
-            var date = DateTime.Now;
+            var date          = DateTime.Now;
 
             _db.WeightDatas.Add(new WeightData
             {
-                Date = date.Date,
-                Weight = patient.Weight,
+                Date      = date.Date,
+                Weight    = patient.Weight,
                 PatientId = patient.PatientID
             });
 

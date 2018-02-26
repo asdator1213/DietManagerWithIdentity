@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using System.Net;
-using System.Web.Mvc;
-using DietManagerIdentity.Helpers;
+﻿using DietManagerIdentity.Helpers;
 using DietManagerIdentity.Models;
 using DietManagerIdentity.ViewModels;
+using System.Linq;
+using System.Net;
+using System.Web.Mvc;
 
 
 namespace DietManagerIdentity.Controllers
@@ -28,12 +28,11 @@ namespace DietManagerIdentity.Controllers
             }
 
             var dietician = _db.Dieticians.Find(id);
-
-            var username = dietician.ApplicationUser.UserName;
+            var username  = dietician.ApplicationUser.UserName;
 
             var user = new AccountDieticianVM
             {
-                Login = username,
+                Login    = username,
                 FullName = dietician.FullName
             };
 
@@ -46,8 +45,7 @@ namespace DietManagerIdentity.Controllers
         public ActionResult RemoveConfirmed(int id)
         {
             var dietician = _db.Dieticians.Find(id);
-
-            var user = _db.Users.Find(dietician.ApplicationUser.Id);
+            var user      = _db.Users.Find(dietician.ApplicationUser.Id);
 
             _db.Dieticians.Remove(dietician);
             _db.Users.Remove(user);
@@ -60,8 +58,7 @@ namespace DietManagerIdentity.Controllers
         public ActionResult Patients()
         {
             var loggedUser = UserHelper.GetLoggedUser();
-
-            var dietician = _db.Dieticians
+            var dietician  = _db.Dieticians
                 .SingleOrDefault(p => p.ApplicationUser.Id == loggedUser.Id);
 
             if (dietician == null)

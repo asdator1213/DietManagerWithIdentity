@@ -1,7 +1,7 @@
-﻿using System;
+﻿using DietManagerIdentity.Models;
+using System;
 using System.Linq;
 using System.Web.Mvc;
-using DietManagerIdentity.Models;
 
 namespace DietManagerIdentity.Controllers
 {
@@ -57,11 +57,8 @@ namespace DietManagerIdentity.Controllers
             }
 
 
-            var meal = _db.Meals
-                .SingleOrDefault(p => p.Id == id);
-
-            var dietMeals = _db.Diets
-                .SingleOrDefault(p => p.Id == diet.Id);
+            var meal      = _db.Meals.SingleOrDefault(p => p.Id == id);
+            var dietMeals = _db.Diets.SingleOrDefault(p => p.Id == diet.Id);
 
 
             if (dietMeals == null)
